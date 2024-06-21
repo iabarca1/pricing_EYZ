@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pyodbc
+import json
 
 # Leer el archivo de secrets
 database_config = st.secrets["database"]
@@ -11,8 +12,12 @@ def run_all_scrapers():
     import run_all_scrapers
     return run_all_scrapers.execute()
 
-# Leer el diccionario de homologación
-homologacion_df = pd.read_csv('Diccionario homolagcion.csv')
+# Leer el diccionario de homologación desde el archivo JSON
+with open('/mnt/data/Diccionario_homolagcion.json') as f:
+    homologacion_data = json.load(f)
+
+# Convertir el diccionario de homologación a DataFrame
+homologacion_df = pd.DataFrame(homologacion_data)
 
 # Conectar a la base de datos usando pyodbc
 conn_str = (
@@ -46,7 +51,7 @@ datos_scrapers = run_all_scrapers()
 scraper_dfs = []
 for nombre_scraper, datos in datos_scrapers.items():
     df = pd.DataFrame(datos)
-    df['nombre'] = df['nombre'].map(homologacion_df.set_index('nombre_scraper')['nombre_base'])
+    df['nombre'] = df['nombre'].map(homologacion_df.set_index(f'Nombre {nombre_scraper}')['Nombre_SKU'])
     df['scraper'] = nombre_scraper
     scraper_dfs.append(df)
 
