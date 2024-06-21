@@ -12,7 +12,7 @@ def run_all_scrapers():
     return run_all_scrapers.execute()
 
 # Leer el diccionario de homologación
-homologacion_df = pd.read_csv('/mnt/data/Diccionario homolagcion.csv')
+homologacion_df = pd.read_csv('Diccionario homolagcion.csv')
 
 # Conectar a la base de datos usando pyodbc
 conn_str = (
