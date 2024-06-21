@@ -13,7 +13,7 @@ def run_all_scrapers():
     return run_all_scrapers.execute()
 
 # Leer el diccionario de homologación desde el archivo JSON
-with open('/mnt/data/Diccionario_homolagcion.json') as f:
+with open('Diccionario_homolagcion.json') as f:
     homologacion_data = json.load(f)
 
 # Convertir el diccionario de homologación a DataFrame
